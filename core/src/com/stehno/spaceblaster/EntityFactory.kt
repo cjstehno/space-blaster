@@ -51,11 +51,14 @@ class EntityFactory(private val engine: PooledEngine) {
 
         val cleanup = engine.createComponent(CleanupComponent::class.java)
 
+        val asteroid = engine.createComponent(AsteroidComponent::class.java)
+
         val entity = engine.createEntity()
             .add(bounds)
             .add(movement)
             .add(position)
             .add(cleanup)
+            .add(asteroid)
 
         engine.addEntity(entity)
     }

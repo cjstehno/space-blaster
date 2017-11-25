@@ -36,6 +36,7 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
         engine.addSystem(BoundsSystem())
         engine.addSystem(AsteroidSpawnSystem(factory))
         engine.addSystem(CleanupSystem())
+        engine.addSystem(CollisionSystem())
 
         engine.addSystem(GridRenderSystem(viewport, renderer))
         engine.addSystem(DebugRenderSystem(viewport, renderer))
