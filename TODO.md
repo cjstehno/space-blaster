@@ -5,3 +5,9 @@
 
 * player
 * rocks
+* player shooting
+* mines
+* aliens
+* aliens shooting
+
+* levels/waves

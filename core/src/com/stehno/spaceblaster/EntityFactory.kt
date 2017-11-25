@@ -1,10 +1,7 @@
 package com.stehno.spaceblaster
 
 import com.badlogic.ashley.core.PooledEngine
-import com.stehno.spaceblaster.component.BoundsComponent
-import com.stehno.spaceblaster.component.MovementComponent
-import com.stehno.spaceblaster.component.PlayerComponent
-import com.stehno.spaceblaster.component.PositionComponent
+import com.stehno.spaceblaster.component.*
 import com.stehno.spaceblaster.config.GameConfig
 
 class EntityFactory(private val engine: PooledEngine) {
@@ -27,11 +24,14 @@ class EntityFactory(private val engine: PooledEngine) {
 
         val movement = engine.createComponent(MovementComponent::class.java)
 
+        val worldWrap = engine.createComponent(WorldWrapComponent::class.java)
+
         val entity = engine.createEntity()
             .add(bounds)
             .add(position)
             .add(movement)
             .add(player)
+            .add(worldWrap)
 
         engine.addEntity(entity)
     }

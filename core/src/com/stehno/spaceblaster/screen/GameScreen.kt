@@ -28,12 +28,15 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
         engine = PooledEngine()
         factory = EntityFactory(engine)
 
-        engine.addSystem(GridRenderSystem(viewport, renderer))
         engine.addSystem(DebugCameraSystem(camera, GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y))
-        engine.addSystem(DebugRenderSystem(viewport, renderer))
+
         engine.addSystem(PlayerSystem())
         engine.addSystem(MovementSystem())
+        engine.addSystem(WorldWrapSystem(viewport))
         engine.addSystem(BoundsSystem())
+
+        engine.addSystem(GridRenderSystem(viewport, renderer))
+        engine.addSystem(DebugRenderSystem(viewport, renderer))
 
         factory.addPlayer()
     }
