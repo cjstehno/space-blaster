@@ -63,6 +63,7 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
         }
 
         engine.addSystem(CollisionSystem(listener))
+        engine.addSystem(ScoreSystem())
 
         engine.addSystem(GridRenderSystem(viewport, renderer))
         engine.addSystem(DebugRenderSystem(viewport, renderer))
@@ -77,6 +78,7 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
         engine.update(delta)
 
         if (GameManager.INSTANCE.isGameOver()) {
+            GameManager.INSTANCE.reset()
 //    FIXME:         game.screen = MenuScreen(game)
         }
     }

@@ -16,6 +16,7 @@ object GameConfig {
     // hud
     const val HUD_WIDTH = 480f
     const val HUD_HEIGHT = 800f
+    const val SCORE_MAX_TIME = 1.25f
 
     // player
     const val PLAYER_SIZE = 0.8f

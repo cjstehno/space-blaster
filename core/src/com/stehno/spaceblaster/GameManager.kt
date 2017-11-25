@@ -48,4 +48,13 @@ class GameManager private constructor(private val prefs: Preferences) {
     fun decrementLives() = lives--
 
     fun isGameOver() = lives <= 0
+
+    fun reset() {
+        lives = GameConfig.LIVES_START
+        score = 0
+    }
+
+    fun updateScore(amount: Int) {
+        score += amount
+    }
 }
