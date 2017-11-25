@@ -1,31 +1,31 @@
 package com.stehno.spaceblaster
 
-import com.badlogic.gdx.ApplicationAdapter
+import com.badlogic.gdx.Application
+import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.utils.Logger
+import com.stehno.spaceblaster.screen.GameScreen
 
-class SpaceBlasterGame : ApplicationAdapter() {
+class SpaceBlasterGame : Game() {
 
-    private lateinit var batch: SpriteBatch
-    private lateinit var img: Texture
+    val assetManager = AssetManager()
+
+    lateinit var batch: SpriteBatch
+        private set
 
     override fun create() {
-        batch = SpriteBatch()
-        img = Texture("badlogic.jpg")
-    }
+        Gdx.app.logLevel = Application.LOG_DEBUG
+        assetManager.logger.level = Logger.DEBUG
 
-    override fun render() {
-        Gdx.gl.glClearColor(1f, 0f, 0f, 1f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-        batch.begin()
-        batch.draw(img, 0f, 0f)
-        batch.end()
+        batch = SpriteBatch()
+
+        setScreen(GameScreen(this))
     }
 
     override fun dispose() {
+        assetManager.dispose()
         batch.dispose()
-        img.dispose()
     }
 }
