@@ -2,11 +2,13 @@ package com.stehno.spaceblaster.screen
 
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.ScreenAdapter
+import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.stehno.spaceblaster.EntityFactory
+import com.stehno.spaceblaster.GameManager
 import com.stehno.spaceblaster.SpaceBlasterGame
 import com.stehno.spaceblaster.asset.AssetDescriptors
 import com.stehno.spaceblaster.config.GameConfig
@@ -21,6 +23,7 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
     private lateinit var renderer: ShapeRenderer
     private lateinit var engine: PooledEngine
     private lateinit var factory: EntityFactory
+    private lateinit var hitSound: Sound
 
     private val assetManager = game.assetManager
 
@@ -34,6 +37,8 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
         engine = PooledEngine()
         factory = EntityFactory(engine)
 
+        hitSound = assetManager[AssetDescriptors.ASTEROID_HIT_SOUND]
+
         engine.addSystem(DebugCameraSystem(camera, GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y))
 
         engine.addSystem(PlayerSystem())
@@ -42,7 +47,22 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
         engine.addSystem(BoundsSystem())
         engine.addSystem(AsteroidSpawnSystem(factory))
         engine.addSystem(CleanupSystem())
-        engine.addSystem(CollisionSystem())
+
+        val listener = object : CollisionListener {
+            override fun hitObstacle() {
+                GameManager.INSTANCE.decrementLives()
+                hitSound.play()
+
+                if (GameManager.INSTANCE.isGameOver()) {
+                    GameManager.INSTANCE.updateHighScore()
+                } else {
+                    engine.removeAllEntities()
+                    factory.addPlayer()
+                }
+            }
+        }
+
+        engine.addSystem(CollisionSystem(listener))
 
         engine.addSystem(GridRenderSystem(viewport, renderer))
         engine.addSystem(DebugRenderSystem(viewport, renderer))
@@ -55,6 +75,10 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
     override fun render(delta: Float) {
         clearScreen()
         engine.update(delta)
+
+        if (GameManager.INSTANCE.isGameOver()) {
+//    FIXME:         game.screen = MenuScreen(game)
+        }
     }
 
     override fun resize(width: Int, height: Int) {

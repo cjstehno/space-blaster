@@ -13,7 +13,7 @@ import com.stehno.spaceblaster.component.PlayerComponent
 /**
  * Logic for collision handling.
  */
-class CollisionSystem : EntitySystem() {
+class CollisionSystem(private val listener: CollisionListener) : EntitySystem() {
 
     companion object {
         private val PLAYER_FAMILY = Family.all(PlayerComponent::class.java, BoundsComponent::class.java).get()
@@ -31,6 +31,7 @@ class CollisionSystem : EntitySystem() {
 
                 if (checkCollision(playerEntity, asteroidEntity)) {
                     asteroid.hit = true
+                    listener.hitObstacle()
                 }
             }
         }
