@@ -11,12 +11,9 @@ import com.stehno.spaceblaster.config.GameConfig
 class AsteroidSpawnSystem(private val factory: EntityFactory) : IntervalSystem(GameConfig.ASTEROID_SPAWN_TIME) {
 
     override fun updateInterval() {
-        val min = 0f
-        val max = GameConfig.WORLD_WIDTH
-
-        val asteroidX = MathUtils.random(min, max)
-        val asteroidY = GameConfig.WORLD_HEIGHT
-
-        factory.addAsteroid(asteroidX, asteroidY)
+        factory.addAsteroid(
+            MathUtils.random(0f, GameConfig.WORLD_WIDTH),
+            GameConfig.WORLD_HEIGHT
+        )
     }
 }

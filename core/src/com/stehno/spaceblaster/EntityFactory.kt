@@ -49,10 +49,13 @@ class EntityFactory(private val engine: PooledEngine) {
             y = startY
         }
 
+        val cleanup = engine.createComponent(CleanupComponent::class.java)
+
         val entity = engine.createEntity()
             .add(bounds)
             .add(movement)
             .add(position)
+            .add(cleanup)
 
         engine.addEntity(entity)
     }
