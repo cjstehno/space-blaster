@@ -10,4 +10,7 @@ object GameConfig {
 
     const val DESKTOP_WIDTH = 480
     const val DESKTOP_HEIGHT = 800
+
+    const val PLAYER_SIZE = 0.8f
+    const val PLAYER_MAX_X_SPEED = 0.25f
 }

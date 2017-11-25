@@ -9,8 +9,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.stehno.spaceblaster.EntityFactory
 import com.stehno.spaceblaster.SpaceBlasterGame
 import com.stehno.spaceblaster.config.GameConfig
-import com.stehno.spaceblaster.system.DebugCameraSystem
-import com.stehno.spaceblaster.system.GridRenderSystem
+import com.stehno.spaceblaster.system.*
 import com.stehno.spaceblaster.util.clearScreen
 
 class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
@@ -31,8 +30,12 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
 
         engine.addSystem(GridRenderSystem(viewport, renderer))
         engine.addSystem(DebugCameraSystem(camera, GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y))
+        engine.addSystem(DebugRenderSystem(viewport, renderer))
+        engine.addSystem(PlayerSystem())
+        engine.addSystem(MovementSystem())
+        engine.addSystem(BoundsSystem())
 
-        // TODO: configure/add factory and systems
+        factory.addPlayer()
     }
 
     override fun render(delta: Float) {
