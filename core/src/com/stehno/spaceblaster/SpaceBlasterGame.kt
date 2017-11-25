@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.Logger
-import com.stehno.spaceblaster.screen.GameScreen
+import com.stehno.spaceblaster.screen.LoadingScreen
 
 class SpaceBlasterGame : Game() {
 
@@ -21,7 +21,7 @@ class SpaceBlasterGame : Game() {
 
         batch = SpriteBatch()
 
-        setScreen(GameScreen(this))
+        setScreen(LoadingScreen(this))
     }
 
     override fun dispose() {

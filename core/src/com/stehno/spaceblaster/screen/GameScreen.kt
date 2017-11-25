@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.stehno.spaceblaster.EntityFactory
 import com.stehno.spaceblaster.SpaceBlasterGame
+import com.stehno.spaceblaster.asset.AssetDescriptors
 import com.stehno.spaceblaster.config.GameConfig
 import com.stehno.spaceblaster.system.*
 import com.stehno.spaceblaster.util.clearScreen
@@ -16,14 +17,19 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
 
     private lateinit var camera: OrthographicCamera
     private lateinit var viewport: Viewport
+    private lateinit var hudViewport: Viewport
     private lateinit var renderer: ShapeRenderer
     private lateinit var engine: PooledEngine
     private lateinit var factory: EntityFactory
+
+    private val assetManager = game.assetManager
 
     override fun show() {
         camera = OrthographicCamera()
         viewport = FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera)
         renderer = ShapeRenderer()
+
+        hudViewport = FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT)
 
         engine = PooledEngine()
         factory = EntityFactory(engine)
@@ -41,6 +47,8 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
         engine.addSystem(GridRenderSystem(viewport, renderer))
         engine.addSystem(DebugRenderSystem(viewport, renderer))
 
+        engine.addSystem(HudRenderSystem(hudViewport, game.batch, assetManager[AssetDescriptors.FONT]))
+
         factory.addPlayer()
     }
 
@@ -51,6 +59,7 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
 
     override fun resize(width: Int, height: Int) {
         viewport.update(width, height, true)
+        hudViewport.update(width, height, true)
     }
 
     override fun hide() {

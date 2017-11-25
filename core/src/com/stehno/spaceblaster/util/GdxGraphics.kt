@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Line
 import com.badlogic.gdx.math.Circle
 
 @JvmOverloads
@@ -22,8 +23,8 @@ inline fun Batch.use(action: () -> Unit) {
     end()
 }
 
-inline fun ShapeRenderer.use(action: () -> Unit) {
-    begin(ShapeRenderer.ShapeType.Line)
+inline fun ShapeRenderer.use(shapeType: ShapeRenderer.ShapeType = Line, action: () -> Unit) {
+    begin(shapeType)
     action()
     end()
 }
