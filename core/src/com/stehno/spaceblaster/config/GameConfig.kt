@@ -16,4 +16,8 @@ object GameConfig {
     // player
     const val PLAYER_SIZE = 0.8f
     const val PLAYER_MAX_X_SPEED = 0.25f
+
+    // asteroid
+    const val ASTEROID_SPAWN_TIME = 0.35f
+    const val ASTEROID_BOUNDS_RADIUS = 0.3f
 }

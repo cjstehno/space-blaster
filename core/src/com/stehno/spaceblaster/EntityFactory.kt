@@ -6,7 +6,6 @@ import com.stehno.spaceblaster.config.GameConfig
 
 class EntityFactory(private val engine: PooledEngine) {
 
-
     fun addPlayer() {
         val startX = GameConfig.WORLD_CENTER_X
         val startY = 1f
@@ -32,6 +31,28 @@ class EntityFactory(private val engine: PooledEngine) {
             .add(movement)
             .add(player)
             .add(worldWrap)
+
+        engine.addEntity(entity)
+    }
+
+    fun addAsteroid(startX: Float, startY: Float) {
+        val bounds = engine.createComponent(BoundsComponent::class.java).apply {
+            bounds.set(startX, startY, GameConfig.ASTEROID_BOUNDS_RADIUS)
+        }
+
+        val movement = engine.createComponent(MovementComponent::class.java).apply {
+            ySpeed = -GameManager.INSTANCE.difficultyLevel.speed
+        }
+
+        val position = engine.createComponent(PositionComponent::class.java).apply {
+            x = startX
+            y = startY
+        }
+
+        val entity = engine.createEntity()
+            .add(bounds)
+            .add(movement)
+            .add(position)
 
         engine.addEntity(entity)
     }
