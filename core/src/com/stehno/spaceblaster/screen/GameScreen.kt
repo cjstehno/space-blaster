@@ -79,7 +79,7 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
 
         if (GameManager.INSTANCE.isGameOver()) {
             GameManager.INSTANCE.reset()
-//    FIXME:         game.screen = MenuScreen(game)
+            game.screen = MenuScreen(game)
         }
     }
 

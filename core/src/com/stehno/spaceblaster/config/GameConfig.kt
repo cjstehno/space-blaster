@@ -26,5 +26,5 @@ object GameConfig {
     // asteroid
     const val ASTEROID_SPAWN_TIME = 0.35f
     const val ASTEROID_BOUNDS_RADIUS = 0.3f
-    const val ASTEROID_SIZE = ASTEROID_BOUNDS_RADIUS * 2f
+    const val ASTEROID_SIZE = ASTEROID_BOUNDS_RADIUS * 3f
 }
