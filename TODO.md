@@ -8,8 +8,10 @@
 * mines
 * aliens
 * aliens shooting
-
+* background music
 * levels/waves
+
+https://github.com/libgdx/libgdx/wiki/Texture-packer#textureatlas
 
 
 credits
@@ -17,3 +19,4 @@ credits
 
 https://opengameart.org/content/atari-booms
 https://opengameart.org/content/spaceship-fighter
+https://www.bensound.com/royalty-free-music/electronica
