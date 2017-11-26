@@ -39,16 +39,13 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
 
         hitSound = assetManager[AssetDescriptors.ASTEROID_HIT_SOUND]
 
-        engine.addSystem(DebugCameraSystem(camera, GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y))
-
         engine.addSystem(PlayerSystem())
         engine.addSystem(MovementSystem())
         engine.addSystem(WorldWrapSystem(viewport))
         engine.addSystem(BoundsSystem())
         engine.addSystem(AsteroidSpawnSystem(factory))
         engine.addSystem(CleanupSystem())
-
-        val listener = object : CollisionListener {
+        engine.addSystem(CollisionSystem(object : CollisionListener {
             override fun hitObstacle() {
                 GameManager.INSTANCE.decrementLives()
                 hitSound.play()
@@ -57,20 +54,20 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
                     GameManager.INSTANCE.updateHighScore()
                 } else {
                     engine.removeAllEntities()
+                    factory.addBackground()
                     factory.addPlayer()
                 }
             }
-        }
-
-        engine.addSystem(CollisionSystem(listener))
+        }))
         engine.addSystem(ScoreSystem())
-
         engine.addSystem(RenderSystem(viewport, game.batch))
-
-        engine.addSystem(GridRenderSystem(viewport, renderer))
-        engine.addSystem(DebugRenderSystem(viewport, renderer))
-
         engine.addSystem(HudRenderSystem(hudViewport, game.batch, assetManager[AssetDescriptors.FONT]))
+
+        if (game.debug) {
+            engine.addSystem(GridRenderSystem(viewport, renderer))
+            engine.addSystem(DebugRenderSystem(viewport, renderer))
+            engine.addSystem(DebugCameraSystem(camera, GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y))
+        }
 
         factory.addBackground()
         factory.addPlayer()

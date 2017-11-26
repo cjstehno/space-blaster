@@ -1,10 +1,8 @@
 # TODO:
 
-* debug grid
-* debug camera
+* ability to toggle debug info
 
-* player
-* rocks
+* adjust rock size
 * player shooting
 * mines
 * aliens

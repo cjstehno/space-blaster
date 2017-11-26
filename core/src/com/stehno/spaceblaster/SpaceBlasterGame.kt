@@ -11,13 +11,19 @@ import com.stehno.spaceblaster.screen.LoadingScreen
 class SpaceBlasterGame : Game() {
 
     val assetManager = AssetManager()
+    val debug = false // TODO: something better
 
     lateinit var batch: SpriteBatch
         private set
 
     override fun create() {
-        Gdx.app.logLevel = Application.LOG_DEBUG
-        assetManager.logger.level = Logger.DEBUG
+        if (debug) {
+            Gdx.app.logLevel = Application.LOG_DEBUG
+            assetManager.logger.level = Logger.DEBUG
+        } else {
+            Gdx.app.logLevel = Application.LOG_ERROR
+            assetManager.logger.level = Logger.ERROR
+        }
 
         batch = SpriteBatch()
 

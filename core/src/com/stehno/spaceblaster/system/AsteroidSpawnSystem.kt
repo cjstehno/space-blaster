@@ -12,7 +12,7 @@ class AsteroidSpawnSystem(private val factory: EntityFactory) : IntervalSystem(G
 
     override fun updateInterval() {
         factory.addAsteroid(
-            MathUtils.random(0f, GameConfig.WORLD_WIDTH),
+            MathUtils.random(0f, GameConfig.WORLD_WIDTH - GameConfig.ASTEROID_SIZE),
             GameConfig.WORLD_HEIGHT
         )
     }
