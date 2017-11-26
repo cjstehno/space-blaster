@@ -39,6 +39,7 @@ class LoadingScreen(private val game: SpaceBlasterGame) : ScreenAdapter() {
 
         assetManager.load(AssetDescriptors.FONT)
         assetManager.load(AssetDescriptors.ASTEROID_HIT_SOUND)
+        assetManager.load(AssetDescriptors.GAME_ATLAS)
     }
 
     override fun render(delta: Float) {

@@ -35,7 +35,7 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
         hudViewport = FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT)
 
         engine = PooledEngine()
-        factory = EntityFactory(engine)
+        factory = EntityFactory(engine, assetManager)
 
         hitSound = assetManager[AssetDescriptors.ASTEROID_HIT_SOUND]
 
@@ -65,11 +65,14 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
         engine.addSystem(CollisionSystem(listener))
         engine.addSystem(ScoreSystem())
 
+        engine.addSystem(RenderSystem(viewport, game.batch))
+
         engine.addSystem(GridRenderSystem(viewport, renderer))
         engine.addSystem(DebugRenderSystem(viewport, renderer))
 
         engine.addSystem(HudRenderSystem(hudViewport, game.batch, assetManager[AssetDescriptors.FONT]))
 
+        factory.addBackground()
         factory.addPlayer()
     }
 

@@ -1,0 +1,27 @@
+
+game.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+asteroid
+  rotate: false
+  xy: 484, 609
+  size: 320, 240
+  orig: 320, 240
+  offset: 0, 0
+  index: -1
+player
+  rotate: false
+  xy: 2, 2
+  size: 52, 45
+  orig: 52, 45
+  offset: 0, 0
+  index: -1
+starfield
+  rotate: false
+  xy: 2, 49
+  size: 480, 800
+  orig: 480, 800
+  offset: 0, 0
+  index: -1
