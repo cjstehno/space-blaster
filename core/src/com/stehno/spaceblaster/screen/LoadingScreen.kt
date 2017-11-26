@@ -40,6 +40,7 @@ class LoadingScreen(private val game: SpaceBlasterGame) : ScreenAdapter() {
         assetManager.load(AssetDescriptors.FONT)
         assetManager.load(AssetDescriptors.ASTEROID_HIT_SOUND)
         assetManager.load(AssetDescriptors.GAME_ATLAS)
+        assetManager.load(AssetDescriptors.SKIN)
     }
 
     override fun render(delta: Float) {
@@ -55,7 +56,7 @@ class LoadingScreen(private val game: SpaceBlasterGame) : ScreenAdapter() {
         }
 
         if (changeScreen) {
-            game.screen = GameScreen(game)
+            game.screen = MenuScreen(game)
         }
     }
 

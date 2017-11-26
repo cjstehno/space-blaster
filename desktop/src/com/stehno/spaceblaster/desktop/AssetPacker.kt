@@ -1,6 +1,7 @@
 package com.stehno.spaceblaster.desktop
 
 import com.badlogic.gdx.tools.texturepacker.TexturePacker
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.process
 
 object AssetPacker {
     const val RAW_ASSETS_PATH = "desktop/assets-raw"
@@ -10,7 +11,6 @@ object AssetPacker {
 fun main(args: Array<String>) {
     val settings = TexturePacker.Settings()
 
-    TexturePacker.process(settings, "${AssetPacker.RAW_ASSETS_PATH}/game", AssetPacker.ASSETS_PATH, "game")
-
-//    TexturePacker.process(settings, "${AssetPacker.RAW_ASSETS_PATH}/skin", "${AssetPacker.ASSETS_PATH}/ui", "uiskin")
+    process(settings, "${AssetPacker.RAW_ASSETS_PATH}/game", AssetPacker.ASSETS_PATH, "game")
+    process(settings, "${AssetPacker.RAW_ASSETS_PATH}/skin", AssetPacker.ASSETS_PATH, "skin")
 }

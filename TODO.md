@@ -3,13 +3,13 @@
 * ability to toggle debug info
 
 * adjust rock size
+* game name on menu screen
 * player shooting
 * mines
 * aliens
 * aliens shooting
 
 * levels/waves
-
 
 
 credits

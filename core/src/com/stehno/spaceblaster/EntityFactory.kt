@@ -15,7 +15,7 @@ class EntityFactory(private val engine: PooledEngine,
 
     fun addPlayer() {
         val startX = GameConfig.WORLD_CENTER_X
-        val startY = 1f
+        val startY = 0.2f
 
         val bounds = engine.createComponent(BoundsComponent::class.java).apply {
             bounds.set(startX, startY, GameConfig.PLAYER_SIZE / 2f)
