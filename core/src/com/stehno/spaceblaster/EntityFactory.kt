@@ -2,6 +2,7 @@ package com.stehno.spaceblaster
 
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.stehno.spaceblaster.asset.AssetDescriptors
 import com.stehno.spaceblaster.asset.RegionNames
 import com.stehno.spaceblaster.component.*
@@ -17,101 +18,53 @@ class EntityFactory(private val engine: PooledEngine,
         val startX = GameConfig.WORLD_CENTER_X
         val startY = 0.2f
 
-        val bounds = engine.createComponent(BoundsComponent::class.java).apply {
-            bounds.set(startX, startY, GameConfig.PLAYER_SIZE / 2f)
-        }
-
-        val position = engine.createComponent(PositionComponent::class.java).apply {
-            x = startX
-            y = startY
-        }
-
-        val player = engine.createComponent(PlayerComponent::class.java)
-
-        val movement = engine.createComponent(MovementComponent::class.java)
-
-        val worldWrap = engine.createComponent(WorldWrapComponent::class.java)
-
-        val texture = engine.createComponent(TextureComponent::class.java).apply {
-            region = gameAtlas[RegionNames.PLAYER]!!
-        }
-
-        val dimension = engine.createComponent(DimensionComponent::class.java).apply {
-            width = GameConfig.PLAYER_SIZE
-            height = GameConfig.PLAYER_SIZE
-        }
-
-        val entity = engine.createEntity()
-            .add(bounds)
-            .add(position)
-            .add(movement)
-            .add(player)
-            .add(worldWrap)
-            .add(texture)
-            .add(dimension)
-
-        engine.addEntity(entity)
+        engine.addEntity(engine.createEntity()
+            .add(bounds(startX, startY, GameConfig.PLAYER_SIZE / 2f))
+            .add(position(startX, startY))
+            .add(movement())
+            .add(engine.createComponent(PlayerComponent::class.java))
+            .add(engine.createComponent(WorldWrapComponent::class.java))
+            .add(texture(gameAtlas[RegionNames.PLAYER]!!))
+            .add(dimension(GameConfig.PLAYER_SIZE, GameConfig.PLAYER_SIZE)))
     }
 
     fun addAsteroid(startX: Float, startY: Float) {
-        val bounds = engine.createComponent(BoundsComponent::class.java).apply {
-            bounds.set(startX, startY, GameConfig.ASTEROID_BOUNDS_RADIUS)
-        }
-
-        val movement = engine.createComponent(MovementComponent::class.java).apply {
-            ySpeed = -GameManager.INSTANCE.difficultyLevel.speed
-        }
-
-        val position = engine.createComponent(PositionComponent::class.java).apply {
-            x = startX
-            y = startY
-        }
-
-        val cleanup = engine.createComponent(CleanupComponent::class.java)
-
-        val asteroid = engine.createComponent(AsteroidComponent::class.java)
-
-        val texture = engine.createComponent(TextureComponent::class.java).apply {
-            region = gameAtlas[RegionNames.ASTEROID]!!
-        }
-
-        val dimension = engine.createComponent(DimensionComponent::class.java).apply {
-            width = GameConfig.ASTEROID_SIZE
-            height = GameConfig.ASTEROID_SIZE
-        }
-
-        val entity = engine.createEntity()
-            .add(bounds)
-            .add(movement)
-            .add(position)
-            .add(cleanup)
-            .add(asteroid)
-            .add(texture)
-            .add(dimension)
-
-        engine.addEntity(entity)
+        engine.addEntity(engine.createEntity()
+            .add(bounds(startX, startY, GameConfig.ASTEROID_BOUNDS_RADIUS))
+            .add(position(startX, startY))
+            .add(movement(-GameManager.INSTANCE.difficultyLevel.speed))
+            .add(engine.createComponent(CleanupComponent::class.java))
+            .add(engine.createComponent(AsteroidComponent::class.java))
+            .add(texture(gameAtlas[RegionNames.ASTEROID]!!))
+            .add(dimension(GameConfig.ASTEROID_SIZE, GameConfig.ASTEROID_SIZE)))
     }
 
     fun addBackground() {
-        val texture = engine.createComponent(TextureComponent::class.java).apply {
-            region = gameAtlas[RegionNames.STARFIELD]!!
-        }
+        engine.addEntity(engine.createEntity()
+            .add(texture(gameAtlas[RegionNames.STARFIELD]!!))
+            .add(position(0f, 0f))
+            .add(dimension(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT)))
+    }
 
-        val position = engine.createComponent(PositionComponent::class.java).apply {
-            x = 0f
-            y = 0f
-        }
+    private fun dimension(w: Float, h: Float) = engine.createComponent(DimensionComponent::class.java).apply {
+        width = w
+        height = h
+    }
 
-        val dimension = engine.createComponent(DimensionComponent::class.java).apply {
-            width = GameConfig.WORLD_WIDTH
-            height = GameConfig.WORLD_HEIGHT
-        }
+    private fun bounds(startX: Float, startY: Float, radius: Float) = engine.createComponent(BoundsComponent::class.java).apply {
+        bounds.set(startX, startY, radius)
+    }
 
-        val entity = engine.createEntity()
-            .add(texture)
-            .add(position)
-            .add(dimension)
+    private fun position(startX: Float, startY: Float) = engine.createComponent(PositionComponent::class.java).apply {
+        x = startX
+        y = startY
+    }
 
-        engine.addEntity(entity)
+    private fun movement(speed: Float = 0f) = engine.createComponent(MovementComponent::class.java).apply {
+        ySpeed = speed
+    }
+
+    private fun texture(textureRegion: TextureRegion) = engine.createComponent(TextureComponent::class.java).apply {
+        region = textureRegion
     }
 }
