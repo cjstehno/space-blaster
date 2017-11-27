@@ -1,13 +1,11 @@
 # TODO:
 
 * ability to toggle debug info
-
-* adjust rock size
+* different sized rocks
+* FIX: animation is rendering but not animated
 * game name on menu screen
 * player shooting
 * mines
-* aliens
-* aliens shooting
 * background music
 * levels/waves
 

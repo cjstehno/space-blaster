@@ -11,6 +11,7 @@ object Mappers {
     val ASTEROID = mapper<AsteroidComponent>()
     val TEXTURE = mapper<TextureComponent>()
     val DIMENSION = mapper<DimensionComponent>()
+    val ANIMATION = mapper<AnimatedComponent>()
 }
 
 inline fun <reified T : Component> mapper(): ComponentMapper<T> = ComponentMapper.getFor(T::class.java)

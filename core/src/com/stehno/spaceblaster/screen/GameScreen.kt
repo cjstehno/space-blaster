@@ -61,6 +61,7 @@ class GameScreen(val game: SpaceBlasterGame) : ScreenAdapter() {
         }))
         engine.addSystem(ScoreSystem())
         engine.addSystem(RenderSystem(viewport, game.batch))
+        engine.addSystem(AnimationSystem(viewport, game.batch))
         engine.addSystem(HudRenderSystem(hudViewport, game.batch, assetManager[AssetDescriptors.FONT]))
 
         if (game.debug) {

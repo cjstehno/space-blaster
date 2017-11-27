@@ -2,6 +2,7 @@ package com.stehno.spaceblaster
 
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.stehno.spaceblaster.asset.AssetDescriptors
 import com.stehno.spaceblaster.asset.RegionNames
@@ -35,7 +36,9 @@ class EntityFactory(private val engine: PooledEngine,
             .add(movement(-GameManager.INSTANCE.difficultyLevel.speed))
             .add(engine.createComponent(CleanupComponent::class.java))
             .add(engine.createComponent(AsteroidComponent::class.java))
-            .add(texture(gameAtlas[RegionNames.ASTEROID]!!))
+            .add(engine.createComponent(AnimatedComponent::class.java).apply {
+                animation = Animation(0.33f, gameAtlas.findRegions(RegionNames.ASTEROID), Animation.PlayMode.LOOP)
+            })
             .add(dimension(GameConfig.ASTEROID_SIZE, GameConfig.ASTEROID_SIZE)))
     }
 
