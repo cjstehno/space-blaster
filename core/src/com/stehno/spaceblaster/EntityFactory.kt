@@ -37,7 +37,7 @@ class EntityFactory(private val engine: PooledEngine,
             .add(engine.createComponent(CleanupComponent::class.java))
             .add(engine.createComponent(AsteroidComponent::class.java))
             .add(engine.createComponent(AnimatedComponent::class.java).apply {
-                animation = Animation(0.33f, gameAtlas.findRegions(RegionNames.ASTEROID), Animation.PlayMode.LOOP)
+                animation = Animation(0.7f, gameAtlas.findRegions(RegionNames.ASTEROID), Animation.PlayMode.LOOP)
             })
             .add(dimension(GameConfig.ASTEROID_SIZE, GameConfig.ASTEROID_SIZE)))
     }

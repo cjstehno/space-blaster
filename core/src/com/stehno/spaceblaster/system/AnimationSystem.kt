@@ -18,6 +18,9 @@ import com.stehno.spaceblaster.util.use
 class AnimationSystem(private val viewport: Viewport,
                       private val batch: SpriteBatch) : IteratingSystem(FAMILY) {
 
+    // FIXME: this stateTime approach is flawed since it causes all animations to be in sync.
+    private var stateTime = 0f
+
     companion object {
         private val FAMILY = Family.all(
             AnimatedComponent::class.java, PositionComponent::class.java, DimensionComponent::class.java
@@ -32,7 +35,9 @@ class AnimationSystem(private val viewport: Viewport,
         viewport.apply()
         batch.projectionMatrix = viewport.camera.combined
 
-        val currentFrame = animation.animation.getKeyFrame(deltaTime, true)
+        stateTime += deltaTime
+
+        val currentFrame = animation.animation.getKeyFrame(stateTime, true)
         batch.use {
             batch.draw(currentFrame, position.x, position.y, dimension.width, dimension.height)
         }

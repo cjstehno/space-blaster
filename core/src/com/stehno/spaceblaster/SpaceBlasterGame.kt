@@ -11,7 +11,7 @@ import com.stehno.spaceblaster.screen.LoadingScreen
 class SpaceBlasterGame : Game() {
 
     val assetManager = AssetManager()
-    val debug = true // TODO: something better
+    val debug = false // TODO: something better
 
     lateinit var batch: SpriteBatch
         private set
